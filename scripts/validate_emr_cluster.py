@@ -3,6 +3,7 @@
 import argparse
 import sys
 import boto3
+import time
 
 def check_arg(args=None):
     parser = argparse.ArgumentParser()
@@ -19,10 +20,26 @@ def main():
     client = boto3.client('emr', region_name='us-east-1')
 
     response = client.describe_cluster(
-        ClusterId=ClusterID
+        ClusterId = ClusterID
     )
 
-    status = response['Cluster']['Status']['State']
-    print(status)
-
+    maxAttempts = 100
+    sleepTimeInSeconds = 20 
+    for i in range(maxAttempts):
+        status = response['Cluster']['Status']['State']
+        print("current cluster status:", status)
+        if status == 'STARTING':
+            time.sleep(sleepTimeInSeconds)
+            continue
+        elif status == 'RUNNING':
+            sys.exit(0)
+        elif status == 'TERMINATED_WITH_ERRORS':
+            print("ERROR!!! Cluster TERMINATED WITH ERRORS")
+            sys.exit(1)
+        elif status == 'TERMINATING':
+            print("ERROR!!! Cluster is TERMINATING")
+            sys.exit(1)
+    print("ERROR!!! Timed out on determening cluster status")
+    sys.exit(1)
+        
 main()
