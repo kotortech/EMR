@@ -17,25 +17,28 @@ def check_arg(args=None):
 def main():
     ClusterID = check_arg(sys.argv[1:])
     maxAttempts = 60 
-    sleepTimeInSeconds = 30 
+    sleepTimeInSeconds = 30
+    waitTime = (maxAttempts * sleepTimeInSeconds) / 60
 
     client = boto3.client('emr', region_name='us-east-1')
+    print("Waiting upto", int(waitTime)," seconds for the cluster to terminate...")
     for i in range(maxAttempts):
         response = client.describe_cluster(
             ClusterId = ClusterID
         )
         status = response['Cluster']['Status']['State']
         print("current cluster status:", status)
-        if status == 'STARTING':
+        if status == 'TERMINATING':
             time.sleep(sleepTimeInSeconds)
-        elif status == 'WAITING':
-            sys.exit(0)
         elif status == 'TERMINATED_WITH_ERRORS':
             print("ERROR!!! Cluster TERMINATED WITH ERRORS")
             sys.exit(1)
         elif status == 'TERMINATING':
             print("ERROR!!! Cluster is TERMINATING")
             sys.exit(1)
+        elif status == 'TERMINATED':
+            print("ERROR!!! Cluster is TERMINATED")
+            sys.exit(0)
     print("ERROR!!! Timed out on determening cluster status")
     sys.exit(1)
         
