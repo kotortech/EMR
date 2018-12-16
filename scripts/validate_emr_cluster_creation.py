@@ -21,7 +21,7 @@ def main():
     waitTime = (maxAttempts * sleepTimeInSeconds) / 60
 
     client = boto3.client('emr', region_name='us-east-1')
-    print("Waiting upto", int(waitTime)," seconds for the cluster to start up...")
+    print("Waiting upto", int(waitTime),"minutes for the cluster to start up...")
     for i in range(maxAttempts):
         response = client.describe_cluster(
             ClusterId = ClusterID

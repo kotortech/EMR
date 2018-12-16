@@ -11,17 +11,21 @@ def check_arg(args=None):
                         help='ID of the EMR cluster',
                         required='True',
                         default='j-XXXXXXXX')
+    parser.add_argument('-CN', '--ClusterName',
+                        help='Name of the EMR cluster',
+                        required='True',
+                        default='EMRCXX')
     results = parser.parse_args(args)
-    return (results.ClusterID)
+    return (results.ClusterID,results.ClusterName)
  
 def main():
-    ClusterID = check_arg(sys.argv[1:])
-
+    ClusterID, ClusterName = check_arg(sys.argv[1:])
+    print(ClusterID,ClusterName)
     client = boto3.client('cloudwatch', region_name='us-east-1')
-    client = boto3.client('emr', region_name='us-east-1')
 
-    response = client.describe_cluster(
-        ClusterId = ClusterID
+    response = client.put_dashboard(
+        DashboardName=ClusterName,
+        DashboardBody='string'
     )
 
 main()
