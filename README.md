@@ -1,4 +1,4 @@
-This is a EMR demo create by Allen Jerjiss for the purpose of this craft demo.
+This is an AWS EMR CI/CD demo create by Allen Jerjiss for the purpose of this craft demo.
 
 scripts -- EMR Boto3 Python based cluster management scripts
 
