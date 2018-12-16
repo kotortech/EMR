@@ -26,14 +26,14 @@ def main():
                 'Name': "Master node",
                 'Market': 'ON_DEMAND',
                 'InstanceRole': 'MASTER',
-                'InstanceType': 'm1.small',
+                'InstanceType': 'c1.medium',
                 'InstanceCount': 1,
             },
             {
                 'Name': "Slave nodes",
                 'Market': 'ON_DEMAND',
                 'InstanceRole': 'CORE',
-                'InstanceType': 'm1.small',
+                'InstanceType': 'c1.medium',
                 'InstanceCount': 2,
             }
         ],
