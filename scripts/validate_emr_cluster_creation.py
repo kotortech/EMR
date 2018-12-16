@@ -17,7 +17,7 @@ def check_arg(args=None):
 def main():
     ClusterID = check_arg(sys.argv[1:])
     maxAttempts = 60 
-    sleepTimeInSeconds = 30
+    sleepTimeInSeconds = 15
     waitTime = (maxAttempts * sleepTimeInSeconds) / 60
 
     client = boto3.client('emr', region_name='us-east-1')

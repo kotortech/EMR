@@ -16,7 +16,7 @@ def check_arg(args=None):
  
 def main():
     ClusterID = check_arg(sys.argv[1:])
-    maxAttempts = 60 
+    maxAttempts = 20
     sleepTimeInSeconds = 30
     waitTime = (maxAttempts * sleepTimeInSeconds) / 60
 
