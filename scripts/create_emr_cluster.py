@@ -13,40 +13,16 @@ def check_arg(args=None):
     results = parser.parse_args(args)
     return (results.ClusterName)
 
-def main()
+def main():
+    ClusterName = check_arg(sys.argv[1:])
     client = boto3.client('emr', region_name='us-east-1')
-
-    response = client.run_job_flow(
-        Name = ClusterName,
-        ReleaseLabel='emr-5.19.0',
-        Instances={
-            'MasterInstanceType': 'm1.small',
-            'SlaveInstanceType': 'm1.small',
-            'InstanceCount': 3,
-            'KeepJobFlowAliveWhenNoSteps': True,
-            'TerminationProtected': False,
-            'Ec2SubnetId': 'subnet-6db2c242',
-            'Ec2KeyName': 'kotortech-aws',
-        },
-        VisibleToAllUsers=True,
-        JobFlowRole='EMR_EC2_DefaultRole',
-        ServiceRole='EMR_DefaultRole'
-    )
-    print (response['JobFlowId'])
-connection = boto3.client(
-    'emr',
-    region_name='us-west-1',
-    aws_access_key_id='<Your AWS Access Key>',
-    aws_secret_access_key='<You AWS Secred Key>',
-)
-
-cluster_id = connection.run_job_flow(
-    Name='test_emr_job_with_boto3',
-    LogUri='',
-    ReleaseLabel='emr-4.2.0',
+    cluster_id = client.run_job_flow(
+    Name=ClusterName,
+    LogUri='s3n://aws-logs-994386103535-us-east-1/elasticmapreduce',
+    ReleaseLabel='emr-5.19.0',
     Instances={
         'InstanceGroups': [
-            {
+            { 
                 'Name': "Master node",
                 'Market': 'ON_DEMAND',
                 'InstanceRole': 'MASTER',
@@ -65,12 +41,12 @@ cluster_id = connection.run_job_flow(
         'KeepJobFlowAliveWhenNoSteps': True,
         'TerminationProtected': False,
         'Ec2SubnetId': 'subnet-6db2c242',
-    },
-    Steps=[],
-    VisibleToAllUsers=True,
-    JobFlowRole='EMR_EC2_DefaultRole',
-    ServiceRole='EMR_DefaultRole',
-)
+        },
+        Steps=[],
+        VisibleToAllUsers=True,
+        JobFlowRole='EMR_EC2_DefaultRole',
+        ServiceRole='EMR_DefaultRole',
+    )
+    print (cluster_id['JobFlowId'])
 
-print (cluster_id['JobFlowId'])
 main()
