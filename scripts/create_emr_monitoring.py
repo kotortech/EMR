@@ -44,6 +44,7 @@ def create_CoreNodesRunning_alarm():
         ActionsEnabled=True,
         AlarmDescription='Insufficient number of Core Nodes Running',
         AlarmActions=['arn:aws:sns:us-east-1:994386103535:oncall'],
+	TreatMissingData='breaching',
         Dimensions=[
             {
                 'Name': 'JobFlowId',
