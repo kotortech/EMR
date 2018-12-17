@@ -31,8 +31,7 @@ def main():
         if status == 'TERMINATING':
             time.sleep(sleepTimeInSeconds)
         elif status == 'TERMINATED_WITH_ERRORS':
-            print("ERROR!!! Cluster TERMINATED WITH ERRORS")
-            sys.exit(1)
+            sys.exit(0)
         elif status == 'TERMINATING':
             print("ERROR!!! Cluster is TERMINATING")
             sys.exit(1)
