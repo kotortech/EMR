@@ -20,7 +20,6 @@ def main():
     Name=ClusterName,
     LogUri='s3n://aws-logs-994386103535-us-east-1/elasticmapreduce',
     ReleaseLabel='emr-5.19.0',
-    Applications=["spark", "hive", "pig"],
     Instances={
         'InstanceGroups': [
             { 
