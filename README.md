@@ -1,4 +1,4 @@
-This is an AWS EMR CI/CD demo created by Allen Jerjiss for the purpose of a craft demo.
+This is an AWS EMR CI/CD POC.
 
 scripts -- EMR Boto3 Python based cluster management scripts
 
